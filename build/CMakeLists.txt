@@ -49,36 +49,6 @@ endif()
 set(LUA_SRC_PATH lua-${LUA_VERSION}/src)
 set(LUAJIT_SRC_PATH luajit-2.1.0b3/src)
 
-#begin lua-rapidjson
-set (RAPIDJSON_SRC
-lua-rapidjson/source/rapidjson.cpp
-lua-rapidjson/source/Document.cpp
-lua-rapidjson/source/Schema.cpp
-lua-rapidjson/source/values.cpp
-)
-set_property(
-	SOURCE ${RAPIDJSON_SRC}
-	APPEND
-	PROPERTY COMPILE_DEFINITIONS
-	LUA_LIB
-)
-list(APPEND THIRDPART_INC  lua-rapidjson/include)
-set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
-include_directories(lua-rapidjson/include)
-#end lua-rapidjson
-
-#begin lua-profobuf
-set (LPB_SRC lua-protobuf/pb.c)
-set_property(
-	SOURCE ${LPB_SRC}
-	APPEND
-	PROPERTY COMPILE_DEFINITIONS
-	LUA_LIB
-)
-list(APPEND THIRDPART_INC lua-protobuf)
-set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
-#end lua-protobuf
-
 if (USING_LUAJIT)
 	
     if (APPLE AND NOT IOS AND NOT ANDROID)
@@ -129,6 +99,38 @@ else ()
 	#   ${LUA_SRC_PATH}/liolib.c ${LUA_SRC_PATH}/lmathlib.c ${LUA_SRC_PATH}/loslib.c ${LUA_SRC_PATH}/lstrlib.c ${LUA_SRC_PATH}/ltablib.c ${LUA_SRC_PATH}/linit.c
 	#   ${LUA_SRC_PATH}/lutf8lib.c ${LUA_SRC_PATH}/loadlib.c )
 endif ()
+
+
+
+#begin lua-profobuf
+set (PROTOBUF_SRC lua-protobuf/pb.c)
+set_property(
+	SOURCE ${PROTOBUF_SRC}
+	APPEND
+	PROPERTY COMPILE_DEFINITIONS
+	LUA_LIB
+)
+list(APPEND THIRDPART_INC lua-protobuf)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${PROTOBUF_SRC})
+#end lua-protobuf
+
+#begin lua-rapidjson
+set (RAPIDJSON_SRC
+lua-rapidjson/source/rapidjson.cpp
+lua-rapidjson/source/Document.cpp
+lua-rapidjson/source/Schema.cpp
+lua-rapidjson/source/values.cpp
+)
+set_property(
+	SOURCE ${RAPIDJSON_SRC}
+	APPEND
+	PROPERTY COMPILE_DEFINITIONS
+	LUA_LIB
+)
+list(APPEND THIRDPART_INC  lua-rapidjson/include)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
+include_directories(lua-rapidjson/include)
+#end lua-rapidjson
 
 set ( LUA_SOCKET
     luasocket/auxiliar.c
