@@ -95,57 +95,6 @@ else ()
 endif ()
 
 
-
-if (NOT PBC)
-	#begin lua-profobuf
-	set (LPB_SRC 
-		lua-protobuf/pb.c
-	)
-	set_property(
-		SOURCE ${LPB_SRC}
-		APPEND
-		PROPERTY COMPILE_DEFINITIONS
-		LUA_LIB
-	)
-	list(APPEND THIRDPART_INC lua-protobuf)
-	set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
-	#end lua-protobuf
-else()
-	#begin pbc
-	set (PBC_SRC 
-		pbc/src/alloc.c
-		pbc/src/array.c
-		pbc/src/array.c
-		pbc/src/bootstrap.c
-		pbc/src/context.c
-		pbc/src/decode.c
-		pbc/src/map.c
-		pbc/src/pattern.c
-		pbc/src/proto.c
-		pbc/src/register.c
-		pbc/src/rmessage.c
-		pbc/src/stringpool.c
-		pbc/src/varint.c
-		pbc/src/wmessage.c
-	)
-
-	if (USING_LUAJIT)
-		list(APPEND PBC_SRC pbc pbc/binding/lua/pbc-lua.c)
-	else ()
-		list(APPEND PBC_SRC pbc pbc/binding/lua53/pbc-lua53.c)
-	endif ()
-
-	set_property(
-		SOURCE ${PBC_SRC}
-		APPEND
-		PROPERTY COMPILE_DEFINITIONS
-		LUA_LIB
-	)
-	list(APPEND THIRDPART_INC pbc pbc/src)
-	set (THIRDPART_SRC ${THIRDPART_SRC} ${PBC_SRC})
-	#end pbc
-endif ()
-
 #begin lua-rapidjson
 set (RAPIDJSON_SRC
 lua-rapidjson/source/rapidjson.cpp
@@ -163,6 +112,20 @@ list(APPEND THIRDPART_INC  lua-rapidjson/include)
 set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
 include_directories(lua-rapidjson/include)
 #end lua-rapidjson
+
+#begin lua-profobuf
+set (LPB_SRC 
+	lua-protobuf/pb.c
+)
+set_property(
+	SOURCE ${LPB_SRC}
+	APPEND
+	PROPERTY COMPILE_DEFINITIONS
+	LUA_LIB
+)
+list(APPEND THIRDPART_INC lua-protobuf)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
+#end lua-protobuf
 
 set ( LUA_SOCKET
     luasocket/auxiliar.c
