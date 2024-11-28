@@ -114,17 +114,17 @@ include_directories(lua-rapidjson/include)
 #end lua-rapidjson
 
 #begin lua-profobuf
-set (LPB_SRC 
-	lua-protobuf/pb.c
-)
-set_property(
-	SOURCE ${LPB_SRC}
-	APPEND
-	PROPERTY COMPILE_DEFINITIONS
-	LUA_LIB
-)
-list(APPEND THIRDPART_INC lua-protobuf)
-set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
+#set (LPB_SRC 
+#	lua-protobuf/pb.c
+#)
+#set_property(
+#	SOURCE ${LPB_SRC}
+#	APPEND
+#	PROPERTY COMPILE_DEFINITIONS
+#	LUA_LIB
+#)
+#list(APPEND THIRDPART_INC lua-protobuf)
+#set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
 #end lua-protobuf
 
 set ( LUA_SOCKET
