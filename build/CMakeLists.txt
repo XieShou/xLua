@@ -131,6 +131,38 @@ include_directories(lua-rapidjson/include)
 #set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
 #end lua-protobuf
 
+#begin lpeg
+set ( LPEG_SRC
+    lpeg/lpcap.c
+    lpeg/lpcode.c
+    lpeg/lpprint.c
+    lpeg/lptree.c
+    lpeg/lpvm.c
+)
+set_property(
+    SOURCE ${LPEG_SRC}
+    APPEND
+    PROPERTY COMPILE_DEFINITIONS
+    LUA_LIB
+)
+list(APPEND THIRDPART_INC  lpeg)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${LPEG_SRC})
+#end lpeg
+
+#begin FFI
+if (NOT USING_LUAJIT)
+	set (FFI_SRC ffi/parser.c ffi/ctype.c ffi/ffi.c)
+	set_property(
+		SOURCE ${FFI_SRC}
+		APPEND
+		PROPERTY COMPILE_DEFINITIONS
+		LUA_LIB
+	)
+	list(APPEND THIRDPART_INC  ffi)
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${FFI_SRC})
+endif ()
+#end FFI
+
 set ( LUA_SOCKET
     luasocket/auxiliar.c
     luasocket/buffer.c
