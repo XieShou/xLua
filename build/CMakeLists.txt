@@ -42,15 +42,21 @@ set(LUA_SRC_PATH lua-${LUA_VERSION}/src)
 set(LUAJIT_SRC_PATH luajit-2.1.0b3/src)
 
 #begin lua-rapidjson
-#set (RAPIDJSON_SRC lua-rapidjson/source/rapidjson.cpp)
-#set_property(
-#	SOURCE ${RAPIDJSON_SRC}
-#	APPEND
-#	PROPERTY COMPILE_DEFINITIONS
-#	LUA_LIB
-#)
-#list(APPEND THIRDPART_INC  lua-rapidjson/include)
-#set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
+set (RAPIDJSON_SRC
+lua-rapidjson/source/rapidjson.cpp
+lua-rapidjson/source/Document.cpp
+lua-rapidjson/source/Schema.cpp
+lua-rapidjson/source/values.cpp
+)
+set_property(
+	SOURCE ${RAPIDJSON_SRC}
+	APPEND
+	PROPERTY COMPILE_DEFINITIONS
+	LUA_LIB
+)
+list(APPEND THIRDPART_INC  lua-rapidjson/include)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
+include_directories(lua-rapidjson/include)
 #end lua-rapidjson
 
 #begin lua-profobuf
