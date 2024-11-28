@@ -18,20 +18,13 @@ project(XLua)
 if ( IOS )
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fembed-bitcode")
-	set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum OS X deployment version")
 endif ()
 
 
 option ( UINT_ESPECIALLY "using custom ulong" OFF )
 option ( USING_LUAJIT "using luajit" OFF )
 option ( GC64 "using gc64" OFF )
-if(IOS)
-    option(LUAC_COMPATIBLE_FORMAT "compatible format" OFF)
-else()
-    option(LUAC_COMPATIBLE_FORMAT "compatible format" ON)
-endif()
-
-add_definitions(-DLUA_VERSION_NUM=503)
+option ( PBC "using pbc" OFF )
 
 
 find_path(XLUA_PROJECT_DIR NAMES SConstruct
@@ -102,17 +95,55 @@ endif ()
 
 
 
-#begin lua-profobuf
-set (PROTOBUF_SRC lua-protobuf/pb.c)
-set_property(
-	SOURCE ${PROTOBUF_SRC}
-	APPEND
-	PROPERTY COMPILE_DEFINITIONS
-	LUA_LIB
-)
-list(APPEND THIRDPART_INC lua-protobuf)
-set (THIRDPART_SRC ${THIRDPART_SRC} ${PROTOBUF_SRC})
-#end lua-protobuf
+if (NOT PBC)
+	#begin lua-profobuf
+	set (LPB_SRC 
+		lua-protobuf/pb.c
+	)
+	set_property(
+		SOURCE ${LPB_SRC}
+		APPEND
+		PROPERTY COMPILE_DEFINITIONS
+		LUA_LIB
+	)
+	list(APPEND THIRDPART_INC lua-protobuf)
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${LPB_SRC})
+	#end lua-protobuf
+else()
+	#begin pbc
+	set (PBC_SRC 
+		pbc/src/alloc.c
+		pbc/src/array.c
+		pbc/src/array.c
+		pbc/src/bootstrap.c
+		pbc/src/context.c
+		pbc/src/decode.c
+		pbc/src/map.c
+		pbc/src/pattern.c
+		pbc/src/proto.c
+		pbc/src/register.c
+		pbc/src/rmessage.c
+		pbc/src/stringpool.c
+		pbc/src/varint.c
+		pbc/src/wmessage.c
+	)
+
+	if (USING_LUAJIT)
+		list(APPEND PBC_SRC pbc pbc/binding/lua/pbc-lua.c)
+	else ()
+		list(APPEND PBC_SRC pbc pbc/binding/lua53/pbc-lua53.c)
+	endif ()
+
+	set_property(
+		SOURCE ${PBC_SRC}
+		APPEND
+		PROPERTY COMPILE_DEFINITIONS
+		LUA_LIB
+	)
+	list(APPEND THIRDPART_INC pbc pbc/src)
+	set (THIRDPART_SRC ${THIRDPART_SRC} ${PBC_SRC})
+	#end pbc
+endif ()
 
 #begin lua-rapidjson
 set (RAPIDJSON_SRC
