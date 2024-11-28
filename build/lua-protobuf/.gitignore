@@ -15,8 +15,6 @@
 *.pdb
 *.rock
 *.so
-*.o
-*.gc*
 google
 lua*/
 out*
