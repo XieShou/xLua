@@ -24,12 +24,12 @@ jobs:
           cd build
           ./make_android_lua54.sh
           ./make_android_lua53.sh
-      - name: Upload
+      - name: Upload-android
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua54/**/*
           name: plugin_lua54
-      - name: Upload53
+      - name: Upload53-android
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua53/**/*
@@ -53,12 +53,12 @@ jobs:
           chmod +x make_ohos_lua5*.sh
           OHOS_NDK_HOME=~/ohos-sdk/linux/native ./make_ohos_lua54.sh
           OHOS_NDK_HOME=~/ohos-sdk/linux/native ./make_ohos_lua53.sh
-      - name: Upload
+      - name: Upload-ohos
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua54/**/*
           name: plugin_lua54
-      - name: Upload53
+      - name: Upload53-ohos
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua53/**/*
@@ -80,7 +80,7 @@ jobs:
           cd build
           sudo apt install gcc-multilib libncurses5 -y
           ./make_android_luajit_arm64.sh  
-      - name: UploadJit
+      - name: UploadJit-android_luajit
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_luajit/**/*
@@ -96,17 +96,17 @@ jobs:
           ./make_linux_lua54.sh
           ./make_linux64_lua53.sh
           ./make_linux64_luajit.sh
-      - name: Upload
+      - name: Upload-linux
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua54/**/*
           name: plugin_lua54
-      - name: Upload53
+      - name: Upload53-linux
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua53/**/*
           name: plugin_lua53   
-      - name: UploadJit
+      - name: UploadJit-linux
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_luajit/**/*
@@ -122,17 +122,17 @@ jobs:
           ./make_ios_lua54.sh
           ./make_ios_lua53.sh
           ./make_ios_luajit.sh
-      - name: Upload
+      - name: Upload-IOS
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua54/**/*
           name: plugin_lua54
-      - name: Upload53
+      - name: Upload53-IOS
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua53/**/*
           name: plugin_lua53   
-      - name: UploadJit
+      - name: UploadJit-IOS
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_luajit/**/*
@@ -150,17 +150,17 @@ jobs:
           ./make_osx_luajit.sh
           ./make_osx_silicon_lua53.sh
           ./make_osx_silicon_lua54.sh
-      - name: Upload
+      - name: Upload-osx
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua54/**/*
           name: plugin_lua54
-      - name: Upload53
+      - name: Upload53-osx
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua53/**/*
           name: plugin_lua53   
-      - name: UploadJit
+      - name: UploadJit-osx
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_luajit/**/*
@@ -187,17 +187,17 @@ jobs:
         run: |
           cd build
           .\make_win64_luajit.bat
-      - name: Upload
+      - name: Upload-windows
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua54/**/*
           name: plugin_lua54
-      - name: Upload53
+      - name: Upload53-windows
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_lua53/**/*
           name: plugin_lua53   
-      - name: UploadJit
+      - name: UploadJit-windows
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_luajit/**/*
@@ -219,7 +219,7 @@ jobs:
         run: |
           cd build
           .\make_win32_luajit.bat  
-      - name: UploadJit
+      - name: UploadJit-windows-luajit-32
         uses: actions/upload-artifact@v4
         with:
           path: ./build/plugin_luajit/**/*
