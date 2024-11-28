@@ -18,13 +18,21 @@ project(XLua)
 if ( IOS )
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fembed-bitcode")
+	set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum OS X deployment version")
 endif ()
 
 
 option ( UINT_ESPECIALLY "using custom ulong" OFF )
 option ( USING_LUAJIT "using luajit" OFF )
 option ( GC64 "using gc64" OFF )
-option ( LUAC_COMPATIBLE_FORMAT "compatible format" OFF )
+if(IOS)
+    option(LUAC_COMPATIBLE_FORMAT "compatible format" OFF)
+else()
+    option(LUAC_COMPATIBLE_FORMAT "compatible format" ON)
+endif()
+
+add_definitions(-DLUA_VERSION_NUM=503)
+
 
 find_path(XLUA_PROJECT_DIR NAMES SConstruct
     PATHS 
